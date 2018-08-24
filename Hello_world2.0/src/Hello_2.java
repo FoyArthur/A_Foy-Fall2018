@@ -12,6 +12,6 @@ public class Hello_2 {
 
 		    public static void main(String[] args){
 		    	
-		        System.out.println("Hello World!! From Arthur Foy"); //Display the string
+		        System.out.println("HELLO World!! From Arthur Foy"); //Display the string
 		    }
 }
