@@ -7,6 +7,6 @@
 
 public class Hello_2 {
 		    public static void main(String[] args){
-		        System.out.println("HELLO WORLd!! From Arthur Foy"); //Display the string
+		        System.out.println("HELLO world!! From Arthur Foy"); //Display the string
 		    }
 }
