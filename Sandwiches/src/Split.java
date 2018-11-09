@@ -5,23 +5,22 @@ public class Split {
 		System.out.println(Arrays.toString("I like really apples!".split(" ")));
 		System.out.println(Arrays.toString("I really like really apples!".split("really")));
 		System.out.println(Arrays.toString("I reallyreally likeapples!".split("really")));
-		System.out.println(Arrays.toString(sandwich("cheesebreadhamavocadobreadham")));
+		System.out.println(Arrays.toString(sandwich("cheese bread ham avocado bread ham")));
+		
 		 
 
 	}
 	
 	public static String[] sandwich(String order) {
-		int x = order.indexOf("bread");
-		String orderr = order.substring(x + 5, order.length());
-		int y = orderr.indexOf("bread");
-		String orderrr = orderr.substring(0, y);
-		String[] finalOrder = orderrr.split("bread");
-		return finalOrder;
+		int indexOfFirstBread = order.indexOf("bread");
+		String orderWithOneBread = order.substring(indexOfFirstBread + 5, order.length());
+		int indexOfSecondBread = orderWithOneBread.indexOf("bread");
+		String orderWithNoBread = orderWithOneBread.substring(0, indexOfSecondBread);
+		String[] splitBread = orderWithNoBread.split("bread");
+		return splitBread;
 	
 		
-		
-		
-		
+	
 	}
 }
 
