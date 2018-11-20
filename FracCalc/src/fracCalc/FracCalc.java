@@ -11,8 +11,11 @@ public class FracCalc {
     	Scanner userInput = new Scanner(System.in);
     	System.out.println("Input fractions.");
     	String input = userInput.nextLine();
-    	while(input.notEquals("quit")) {
+    	while(input.equals("quit") != true) {
     		System.out.println(produceAnswer(input));
+    		System.out.println("Input fractions");
+    		input = userInput.nextLine();
+    	}
     	
 
    	}
