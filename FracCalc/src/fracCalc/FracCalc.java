@@ -36,7 +36,28 @@ public class FracCalc {
         String firstOperand = fractionDecomposed[0];
         String operator = fractionDecomposed[1];
         String secondOperand = fractionDecomposed[2];
-        return(secondOperand);
+        String wholeFirst = null;
+        String wholeSecond = null;
+        String numeratorFirst = null;
+        String numeratorSecond = null;
+        String denominatorFirst = null;
+        String denominatorSecond = null;
+        if(firstOperand.indexOf("_") != -1){
+        	wholeFirst = firstOperand.substring(firstOperand.indexOf("_") - 1, firstOperand.indexOf("_"));
+        }else {
+        	wholeFirst = "0";
+        }
+        
+        if(secondOperand.indexOf("_") != -1){
+        	wholeSecond = secondOperand.substring(secondOperand.indexOf("_") - 1, secondOperand.indexOf("_"));
+        }else {
+        	wholeSecond = "0";
+        }
+        
+        if(firstOperand.indexOf("/") != -1) {
+        	numeratorFirst = firstOperand.substring(firstOperand.indexOf("/") - 1, firstOperand.indexOf("/"));
+        }
+        
     }
 
     // TODO: Fill in the space below with any helper methods that you think you will need
