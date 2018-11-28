@@ -44,20 +44,61 @@ public class FracCalc {
         String denominatorSecond = null;
         if(firstOperand.indexOf("_") != -1){
         	wholeFirst = firstOperand.substring(firstOperand.indexOf("_") - 1, firstOperand.indexOf("_"));
-        }else {
+        }else if(firstOperand.indexOf("/") != -1) {
         	wholeFirst = "0";
+        }else {
+        	wholeFirst = firstOperand;
         }
         
         if(secondOperand.indexOf("_") != -1){
         	wholeSecond = secondOperand.substring(secondOperand.indexOf("_") - 1, secondOperand.indexOf("_"));
-        }else {
+        }else if(secondOperand.indexOf("/") != -1){
         	wholeSecond = "0";
+        }else {
+        	wholeSecond = secondOperand;
         }
-        
-        if(firstOperand.indexOf("/") != -1) {
-        	numeratorFirst = firstOperand.substring(firstOperand.indexOf("/") - 1, firstOperand.indexOf("/"));
+        //first numerator and denominator
+        if(firstOperand.indexOf("/") != -1 && firstOperand.indexOf("_") != -1) {
+        	numeratorFirst = firstOperand.substring(firstOperand.indexOf("_") + 1, firstOperand.indexOf("/"));
+        	denominatorFirst = firstOperand.substring(firstOperand.indexOf("/") + 1);
+        } else if(firstOperand.indexOf("/")!= -1) {
+        	numeratorFirst = firstOperand.substring(0, firstOperand.indexOf("/"));
+        	denominatorFirst = firstOperand.substring(firstOperand.indexOf("/") + 1);
+        }else {
+        	numeratorFirst = "0";
+        	denominatorFirst = "1";		
         }
+        //secondNumerator and denominator
+        if(secondOperand.indexOf("/") != -1 && secondOperand.indexOf("_") != -1) {
+        	numeratorSecond = secondOperand.substring(secondOperand.indexOf("_") + 1, secondOperand.indexOf("/"));
+        	denominatorSecond = secondOperand.substring(secondOperand.indexOf("/") + 1);
+        } else if(secondOperand.indexOf("/")!= -1) {
+        	numeratorSecond = secondOperand.substring(0, secondOperand.indexOf("/"));
+        	denominatorSecond = secondOperand.substring(secondOperand.indexOf("/") + 1);
+        }else {
+        	numeratorSecond = "0";
+        	denominatorSecond = "1";		
+        }
+        int numeratorOne = Integer.parseInt(numeratorFirst);
+        int numeratorTwo = Integer.parseInt(numeratorSecond);
+        int wholeOne = Integer.parseInt(wholeFirst);
+        int wholeTwo = Integer.parseInt(wholeSecond);
+        int denominatorOne = Integer.parseInt(denominatorFirst);
+        int denominatorTwo = Integer.parseInt(denominatorSecond);
         
+        String improperFirst = toImproperFrac(wholeOne, numeratorOne, denominatorOne);
+        String improperSecond = toImproperFrac(wholeTwo, numeratorTwo, denominatorTwo);
+        if(operator == "+") {
+        	return(addition(improperFirst, improperSecond));
+        }
+    }
+    public static String toImproperFrac(int wholeNum, int numerator, int denominator) {
+		int newNumerator =  wholeNum * denominator + numerator;
+		return newNumerator + "/" + denominator;
+	}
+    
+    public static String addition(String one, String two) {
+    	
     }
 
     // TODO: Fill in the space below with any helper methods that you think you will need
