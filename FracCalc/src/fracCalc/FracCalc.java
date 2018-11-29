@@ -88,17 +88,40 @@ public class FracCalc {
         
         String improperFirst = toImproperFrac(wholeOne, numeratorOne, denominatorOne);
         String improperSecond = toImproperFrac(wholeTwo, numeratorTwo, denominatorTwo);
-        if(operator == "+") {
-        	return(addition(improperFirst, improperSecond));
+        String finalAnswer = null;
+        if(operator.equals("+") == true) {
+        	finalAnswer = addition(improperFirst, improperSecond);
         }
+        return(finalAnswer);
     }
     public static String toImproperFrac(int wholeNum, int numerator, int denominator) {
-		int newNumerator =  wholeNum * denominator + numerator;
+    	int newNumerator = 0;
+    	if(wholeNum >= 0) {
+    		newNumerator =  wholeNum * denominator + numerator;
+    	}else {
+    		newNumerator = wholeNum * denominator;
+    	}
 		return newNumerator + "/" + denominator;
 	}
     
     public static String addition(String one, String two) {
-    	
+    	int[] operandOne = new int[2];
+    	int[] operandTwo = new int[2];
+    	operandOne[0] = one.indexOf(0);
+    	operandOne[1] = one.indexOf(1);
+    	operandTwo[0] = one.indexOf(0);
+    	operandTwo[1] = one.indexOf(1);
+    	int numeratorAnswer = 0;
+    	int denominatorAnswer = 0;
+    	if(operandOne[1] == operandTwo[1]) {
+    		numeratorAnswer = operandOne[0] + operandTwo[0];
+    		denominatorAnswer = operandOne[1];
+    	}else {
+    		numeratorAnswer = (operandOne[0] * operandTwo[1]) + operandTwo[0] + operandOne[1];
+    		denominatorAnswer = (operandOne[1] * operandTwo[1]);
+    	}
+    	String finalValue= (numeratorAnswer + "/" + denominatorAnswer);
+    	return(finalValue);
     }
 
     // TODO: Fill in the space below with any helper methods that you think you will need
