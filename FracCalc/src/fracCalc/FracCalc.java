@@ -107,22 +107,25 @@ public class FracCalc {
     public static String addition(String one, String two) {
     	int[] operandOne = new int[2];
     	int[] operandTwo = new int[2];
-    	operandOne[0] = one.indexOf(0);
-    	operandOne[1] = one.indexOf(1);
-    	operandTwo[0] = one.indexOf(0);
-    	operandTwo[1] = one.indexOf(1);
+    	operandOne[0] = Integer.parseInt(one.substring(0, one.indexOf("/")));
+    	operandOne[1] = Integer.parseInt(one.substring(one.indexOf("/") + 1));
+    	operandTwo[0] = Integer.parseInt(two.substring(0, two.indexOf("/")));
+    	operandTwo[1] = Integer.parseInt(two.substring(two.indexOf("/") + 1));
     	int numeratorAnswer = 0;
     	int denominatorAnswer = 0;
-    	if(operandOne[1] == operandTwo[1]) {
+    	if(operandOne[1] - operandTwo[1] == 0) {
     		numeratorAnswer = operandOne[0] + operandTwo[0];
     		denominatorAnswer = operandOne[1];
     	}else {
-    		numeratorAnswer = (operandOne[0] * operandTwo[1]) + operandTwo[0] + operandOne[1];
+    		numeratorAnswer = (operandOne[0] * operandTwo[1]) + operandTwo[0] * operandOne[1];
     		denominatorAnswer = (operandOne[1] * operandTwo[1]);
     	}
-    	String finalValue= (numeratorAnswer + "/" + denominatorAnswer);
+    	String finalValue= numeratorAnswer + "/" + denominatorAnswer;
     	return(finalValue);
+    	sd;
     }
+    
+    public static String multiplication(String one, String two) {
 
     // TODO: Fill in the space below with any helper methods that you think you will need
     
