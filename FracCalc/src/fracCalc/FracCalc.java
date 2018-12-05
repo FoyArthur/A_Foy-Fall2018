@@ -86,47 +86,60 @@ public class FracCalc {
         int denominatorOne = Integer.parseInt(denominatorFirst);
         int denominatorTwo = Integer.parseInt(denominatorSecond);
         
-        String improperFirst = toImproperFrac(wholeOne, numeratorOne, denominatorOne);
-        String improperSecond = toImproperFrac(wholeTwo, numeratorTwo, denominatorTwo);
+        int[] improperFirst = toImproperFrac(wholeOne, numeratorOne, denominatorOne);
+        int[] improperSecond = toImproperFrac(wholeTwo, numeratorTwo, denominatorTwo);
+        
         String finalAnswer = null;
         if(operator.equals("+") == true) {
         	finalAnswer = addition(improperFirst, improperSecond);
-        }
+        }else if(operator.equals("*") == true) {
+        	finalAnswer = multiplication(improperFirst, improperSecond);
+        }//else if(operator.equals("-") == true) {
+        //	finalAnswer = subtraction(improperFirst, improperSecond);
+        //}
         return(finalAnswer);
+        
     }
-    public static String toImproperFrac(int wholeNum, int numerator, int denominator) {
+    
+    public static int[] toImproperFrac(int wholeNum, int numerator, int denominator) {
     	int newNumerator = 0;
     	if(wholeNum >= 0) {
     		newNumerator =  wholeNum * denominator + numerator;
     	}else {
-    		newNumerator = wholeNum * denominator;
+    		newNumerator = wholeNum * denominator - numerator;
     	}
-		return newNumerator + "/" + denominator;
+		int[] answer = {newNumerator, denominator};
+		return answer;
 	}
     
-    public static String addition(String one, String two) {
-    	int[] operandOne = new int[2];
-    	int[] operandTwo = new int[2];
-    	operandOne[0] = Integer.parseInt(one.substring(0, one.indexOf("/")));
-    	operandOne[1] = Integer.parseInt(one.substring(one.indexOf("/") + 1));
-    	operandTwo[0] = Integer.parseInt(two.substring(0, two.indexOf("/")));
-    	operandTwo[1] = Integer.parseInt(two.substring(two.indexOf("/") + 1));
+    public static String addition(int[] one, int[] two) {
     	int numeratorAnswer = 0;
     	int denominatorAnswer = 0;
-    	if(operandOne[1] - operandTwo[1] == 0) {
-    		numeratorAnswer = operandOne[0] + operandTwo[0];
-    		denominatorAnswer = operandOne[1];
+    	if(one[1] - two[1] == 0) {
+    		numeratorAnswer = one[0] + two[0];
+    		denominatorAnswer = one[1];
     	}else {
-    		numeratorAnswer = (operandOne[0] * operandTwo[1]) + operandTwo[0] * operandOne[1];
-    		denominatorAnswer = (operandOne[1] * operandTwo[1]);
+    		numeratorAnswer = (one[0] * two[1]) + two[0] * one[1];
+    		denominatorAnswer = (one[1] * two[1]);
     	}
     	String finalValue= numeratorAnswer + "/" + denominatorAnswer;
     	return(finalValue);
-    	sd;
     }
     
-    public static String multiplication(String one, String two) {
+    public static String multiplication(int[] one, int[] two) {
+    	int numeratorAnswer = one[0] * two[0];
+    	int denominatorAnswer = one[1] * two[1];
+    	return (numeratorAnswer + "/" + denominatorAnswer);
+    }
+    
+    //public static String subtraction(int[] one, int[] two) {
+  //  	int numeratorAnswer = 0;
+   // 	int denominatorAnswer = 0;
+   //	if()
+   //}
+   
 
     // TODO: Fill in the space below with any helper methods that you think you will need
     
 }
+
