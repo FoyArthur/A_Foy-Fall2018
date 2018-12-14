@@ -43,7 +43,7 @@ public class FracCalc {
         String denominatorFirst = null;
         String denominatorSecond = null;
         if(firstOperand.indexOf("_") != -1){
-        	wholeFirst = firstOperand.substring(firstOperand.indexOf("_") - 1, firstOperand.indexOf("_"));
+        	wholeFirst = firstOperand.substring(0, firstOperand.indexOf("_"));
         }else if(firstOperand.indexOf("/") != -1) {
         	wholeFirst = "0";
         }else {
@@ -51,7 +51,7 @@ public class FracCalc {
         }
         
         if(secondOperand.indexOf("_") != -1){
-        	wholeSecond = secondOperand.substring(secondOperand.indexOf("_") - 1, secondOperand.indexOf("_"));
+        	wholeSecond = secondOperand.substring(0, secondOperand.indexOf("_"));
         }else if(secondOperand.indexOf("/") != -1){
         	wholeSecond = "0";
         }else {
@@ -85,26 +85,28 @@ public class FracCalc {
         int wholeTwo = Integer.parseInt(wholeSecond);
         int denominatorOne = Integer.parseInt(denominatorFirst);
         int denominatorTwo = Integer.parseInt(denominatorSecond);
-        
+     
         int[] improperFirst = toImproperFrac(wholeOne, numeratorOne, denominatorOne);
         int[] improperSecond = toImproperFrac(wholeTwo, numeratorTwo, denominatorTwo);
         
-        String finalAnswer = null;
+        int[] finalAnswer = new int[2];
         if(operator.equals("+") == true) {
         	finalAnswer = addition(improperFirst, improperSecond);
         }else if(operator.equals("*") == true) {
         	finalAnswer = multiplication(improperFirst, improperSecond);
-        }//else if(operator.equals("-") == true) {
-        //	finalAnswer = subtraction(improperFirst, improperSecond);
-        //}
-        return(finalAnswer);
-        
+        }else if(operator.equals("-") == true) {
+        	finalAnswer = subtraction(improperFirst, improperSecond);
+        }else if(operator.equals("/") == true) {
+        	finalAnswer = division(improperFirst, improperSecond);
+        }
+        System.out.println(finalAnswer[0] + " " + finalAnswer[1]);
+        return(toMixedNum(finalAnswer[0], finalAnswer[1]));
     }
     
     public static int[] toImproperFrac(int wholeNum, int numerator, int denominator) {
     	int newNumerator = 0;
     	if(wholeNum >= 0) {
-    		newNumerator =  wholeNum * denominator + numerator;
+    		newNumerator =  (wholeNum * denominator) + numerator;
     	}else {
     		newNumerator = wholeNum * denominator - numerator;
     	}
@@ -112,7 +114,7 @@ public class FracCalc {
 		return answer;
 	}
     
-    public static String addition(int[] one, int[] two) {
+    public static int[] addition(int[] one, int[] two) {
     	int numeratorAnswer = 0;
     	int denominatorAnswer = 0;
     	if(one[1] - two[1] == 0) {
@@ -122,22 +124,116 @@ public class FracCalc {
     		numeratorAnswer = (one[0] * two[1]) + two[0] * one[1];
     		denominatorAnswer = (one[1] * two[1]);
     	}
-    	String finalValue= numeratorAnswer + "/" + denominatorAnswer;
+    	int[] finalValue = {numeratorAnswer, denominatorAnswer};
+    	return finalValue;
+    }
+    public static int[] subtraction(int[] one, int[] two) {
+    	int numeratorAnswer = 0;
+    	int denominatorAnswer = 0;
+    	if(one[1] - two[1] == 0) {
+    		numeratorAnswer = one[0] - two[0];
+    		denominatorAnswer = one[1];
+    	}else {
+    		numeratorAnswer = (one[0] * two[1]) - two[0] * one[1];
+    		denominatorAnswer = (one[1] * two[1]);
+    	}
+    	int[] finalValue = {numeratorAnswer, denominatorAnswer};
+    	return finalValue;
+    }
+    
+    public static int[] multiplication(int[] one, int[] two) {
+    	int numeratorAnswer = one[0] * two[0];
+    	int denominatorAnswer = one[1] * two[1];
+    	int[] finalValue = {numeratorAnswer, denominatorAnswer};
+    	return finalValue;
+    }
+    
+    public static int[] division(int[] one, int[] two) {
+    	int numeratorAnswer = one[0] * two[1];
+    	int denominatorAnswer = one[1] * two[0];
+    	int[] finalValue = {numeratorAnswer, denominatorAnswer};
     	return(finalValue);
     }
     
-    public static String multiplication(int[] one, int[] two) {
-    	int numeratorAnswer = one[0] * two[0];
-    	int denominatorAnswer = one[1] * two[1];
-    	return (numeratorAnswer + "/" + denominatorAnswer);
-    }
+    public static String toMixedNum(int numerator, int denominator) {
+    	String finalAnswerr = null;
+    	int wholeNum = 0;
+    	int gcf = 0;
+    	if(numerator < 0 && denominator < 0) {
+    		numerator *= -1;
+    		denominator *= -1;
+    	}
+    	if(denominator == 1) {
+    		finalAnswerr = (numerator + "");
+    	}else if(numerator == denominator) {
+    		finalAnswerr = 1 + "";
+    	}else if(absValue(numerator) > absValue(denominator)){
+    		wholeNum = numerator/denominator;
+    		numerator = numerator - (wholeNum * denominator);
+    		if(numerator < 0) {
+    			numerator *= -1;
+    		}
+    		if(denominator < 0) {
+    			denominator *= -1;
+    		}
+    		gcf = gcf(numerator, denominator);
+    		numerator = (numerator/gcf);
+    		denominator = (denominator/gcf);
+    		System.out.println(numerator + " " + denominator);
+    		if(numerator == 0) {
+    			return(wholeNum + "");
+    		}else {
+    			finalAnswerr = (wholeNum + "_" + numerator + "/" + denominator);
+    		}
+    	}else {
+    		gcf = gcf(absValue(numerator), absValue(denominator));
+    		numerator = numerator/gcf;
+    		denominator = denominator/gcf;
+    		if(denominator < 0) {
+    			denominator *= -1;
+    			numerator *= -1;
+    		}
+    		finalAnswerr = numerator + "/" + denominator;
+    	}
+    	if(numerator == 0) {
+    		finalAnswerr = 0 + "";
+    	}
+    	return finalAnswerr;
+	}
     
-    //public static String subtraction(int[] one, int[] two) {
-  //  	int numeratorAnswer = 0;
-   // 	int denominatorAnswer = 0;
-   //	if()
-   //}
-   
+	public static int gcf(int num1, int num2){
+		int gcFactor = 1;
+		for(int i = 2; i <= min(num1, num2); i++) {
+			if(isDivisibleBy(num1, i) == true && isDivisibleBy(num2, i) == true){
+				gcFactor = i;
+			}
+		}
+		return gcFactor;
+	}
+	
+	public static boolean isDivisibleBy(int num1, int num2) {
+		if(num2 == 0) throw new IllegalArgumentException ("The second number cannot be zero");
+		if(num1 % num2 == 0 || num2 % num1 == 0) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+    
+	public static int absValue(int number) {
+		if(number < 0) {
+			return number * -1;
+		}else {
+			return number;
+		}
+	}
+	public static int min(int num1, int num2){
+		if(num1 <= num2){
+			return num1;
+		} else{
+			return num2;
+		}
+	}
 
     // TODO: Fill in the space below with any helper methods that you think you will need
     
