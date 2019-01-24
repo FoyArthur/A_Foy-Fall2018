@@ -1,9 +1,9 @@
 //@auuthor Arthur Foy
 //11/19/2018
-package fracCalc;
+package fracCalcOld;
 import java.util.*;
 
-public class FracCalc {
+public class FracCalcOld {
 
     public static void main(String[] args) 
     {
@@ -99,7 +99,6 @@ public class FracCalc {
         }else if(operator.equals("/") == true) {
         	finalAnswer = division(improperFirst, improperSecond);
         }
-        System.out.println(finalAnswer[0] + " " + finalAnswer[1]);
         return(toMixedNum(finalAnswer[0], finalAnswer[1]));
     }
     
@@ -156,7 +155,7 @@ public class FracCalc {
     }
     
     public static String toMixedNum(int numerator, int denominator) {
-    	String finalAnswerr = null;
+    	String finalString = null;
     	int wholeNum = 0;
     	int gcf = 0;
     	if(numerator < 0 && denominator < 0) {
@@ -164,9 +163,9 @@ public class FracCalc {
     		denominator *= -1;
     	}
     	if(denominator == 1) {
-    		finalAnswerr = (numerator + "");
+    		finalString = (numerator + "");
     	}else if(numerator == denominator) {
-    		finalAnswerr = 1 + "";
+    		finalString = 1 + "";
     	}else if(absValue(numerator) > absValue(denominator)){
     		wholeNum = numerator/denominator;
     		numerator = numerator - (wholeNum * denominator);
@@ -183,7 +182,7 @@ public class FracCalc {
     		if(numerator == 0) {
     			return(wholeNum + "");
     		}else {
-    			finalAnswerr = (wholeNum + "_" + numerator + "/" + denominator);
+    			finalString = (wholeNum + "_" + numerator + "/" + denominator);
     		}
     	}else {
     		gcf = gcf(absValue(numerator), absValue(denominator));
@@ -193,12 +192,12 @@ public class FracCalc {
     			denominator *= -1;
     			numerator *= -1;
     		}
-    		finalAnswerr = numerator + "/" + denominator;
+    		finalString = numerator + "/" + denominator;
     	}
     	if(numerator == 0) {
-    		finalAnswerr = 0 + "";
+    		finalString = 0 + "";
     	}
-    	return finalAnswerr;
+    	return finalString;
 	}
     
 	public static int gcf(int num1, int num2){
